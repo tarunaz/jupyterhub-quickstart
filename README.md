@@ -15,7 +15,7 @@ You can use the official Jupyter project ``docker-stacks`` images, but some extr
 To create a minimal Jupyter notebook image, as well as images similar to the ``scipy-notebook`` and ``tensorflow-notebook`` images provided by the Jupyter project team, run:
 
 ```
-oc create -f https://raw.githubusercontent.com/jupyter-on-openshift/jupyter-notebooks/master/images.json
+oc create -f https://raw.githubusercontent.com/tarunaz/jupyter-notebooks/master/images.json
 ```
 
 This will create a build configuration in your OpenShift project to build the images using the Python 3.5 S2I builder. You can watch the progress of the build for the minimal Jupyter notebook image by running:
@@ -28,12 +28,12 @@ A tagged image ``s2i-minimal-notebook:3.5`` should be created in your project.
 
 For more detailed instructions on creating the minimal Jupyter notebook image, and how to create custom notebook images, read:
 
-* https://github.com/jupyter-on-openshift/jupyter-notebooks
+* https://github.com/tarunaz/jupyter-notebooks
 
 To create the JupyterHub image, next run:
 
 ```
-oc create -f https://raw.githubusercontent.com/jupyter-on-openshift/jupyterhub-quickstart/master/images.json
+oc create -f https://raw.githubusercontent.com/tarunaz/jupyterhub-quickstart/master/images.json
 ```
 
 This will create a build configuration in your OpenShift project to build a JupyterHub image using the Python 3.5 S2I builder. You can watch the progress of the build by running:
@@ -50,7 +50,7 @@ Loading the JupyterHub Templates
 To make it easier to deploy JupyterHub in OpenShift, templates are provided. To load the templates run:
 
 ```
-oc create -f https://raw.githubusercontent.com/jupyter-on-openshift/jupyterhub-quickstart/master/templates.json
+oc create -f https://raw.githubusercontent.com/tarunaz/jupyterhub-quickstart/master/templates.json
 ```
 
 Creating the JupyterHub Deployment
