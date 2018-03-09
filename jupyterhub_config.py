@@ -63,6 +63,9 @@ c.KubeSpawner.args = ['--hub-api-url=http://%s:%d/hub/api' % (
 
 c.KubeSpawner.pod_name_template = '%s-nb-{username}' % c.KubeSpawner.hub_connect_ip
 
+# Enable Jupyter Lab
+c.KubeSpawner.environment = dict(JUPYTER_ENABLE_LAB='true')
+
 c.JupyterHub.admin_access = True
 
 if os.environ.get('JUPYTERHUB_COOKIE_SECRET'):
