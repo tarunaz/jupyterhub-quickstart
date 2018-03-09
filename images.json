@@ -46,7 +46,7 @@
                     "sourceStrategy": {
                         "from": {
                             "kind": "DockerImage",
-                            "name": "registry.access.redhat.com/rhscl/python-36-rhel7:latest"
+                            "name": "registry.access.redhat.com/rhscl/python-35-rhel7:latest"
                         }
                     }
                 },
