@@ -1,0 +1,37 @@
+---
+kind: List
+apiVersion: v1
+items:
+- kind: ImageStream
+  apiVersion: v1
+  metadata:
+    name: jupyterhub
+    labels:
+      build: jupyterhub
+  spec:
+    lookupPolicy:
+      local: true
+- kind: BuildConfig
+  apiVersion: v1
+  metadata:
+    name: jupyterhub
+    labels:
+      build: jupyterhub
+  spec:
+    triggers:
+    - type: ConfigChange
+    - type: ImageChange
+    source:
+      type: Git
+      git:
+        uri: https://github.com/tarunaz/jupyterhub-quickstart.git
+    strategy:
+      type: Source
+      sourceStrategy:
+        from:
+          kind: DockerImage
+          name: registry.access.redhat.com/rhscl/python-35-rhel7:latest
+    output:
+      to:
+        kind: ImageStreamTag
+        name: jupyterhub:latest
