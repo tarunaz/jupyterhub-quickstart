@@ -65,7 +65,28 @@ c.KubeSpawner.pod_name_template = '%s-nb-{username}' % c.KubeSpawner.hub_connect
 
 # Enable Jupyter Lab
 c.KubeSpawner.environment = dict(JUPYTER_ENABLE_LAB='true')
+c.JupyterHub.spawner_class = 'wrapspawner.ProfilesSpawner'
 
+c.ProfilesSpawner.profiles = [
+    (
+        "Minimal Notebook (CentOS 7 / Python 3.5)",
+        's2i-minimal-notebook',
+        'kubespawner.KubeSpawner',
+        dict(singleuser_image_spec='s2i-minimal-notebook:3.5')
+    ),
+    (
+        "SciPy Notebook (CentOS 7 / Python 3.5)",
+        's2i-scipy-notebook',
+        'kubespawner.KubeSpawner',
+        dict(singleuser_image_spec='s2i-scipy-notebook:3.5')
+    ),
+    (
+        "Tensorflow Notebook (CentOS 7 / Python 3.5)",
+        's2i-tensorflow-notebook',
+        'kubespawner.KubeSpawner',
+        dict(singleuser_image_spec='s2i-tensorflow-notebook:3.5')
+    )
+]
 c.JupyterHub.admin_access = True
 
 if os.environ.get('JUPYTERHUB_COOKIE_SECRET'):
