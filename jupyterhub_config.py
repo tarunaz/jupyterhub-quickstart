@@ -67,8 +67,6 @@ c.KubeSpawner.pod_name_template = '%s-nb-{username}' % c.KubeSpawner.hub_connect
 # c.KubeSpawner.environment = dict(JUPYTER_ENABLE_LAB='true')
 # c.JupyterHub.spawner_class = 'wrapspawner.ProfilesSpawner'
 
-c.JupyterHub.spawner_class = DemoFormSpawner
-
 class DemoFormSpawner(LocalProcessSpawner):
     def _options_form_default(self):
         default_env = "YOURNAME=%s\n" % self.user.name
@@ -95,6 +93,9 @@ class DemoFormSpawner(LocalProcessSpawner):
             env.update(self.user_options['env'])
         return env
     
+
+c.JupyterHub.spawner_class = DemoFormSpawner
+
 c.JupyterHub.admin_access = True
 
 if os.environ.get('JUPYTERHUB_COOKIE_SECRET'):
