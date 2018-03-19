@@ -66,6 +66,9 @@ c.KubeSpawner.pod_name_template = '%s-nb-{username}' % c.KubeSpawner.hub_connect
 # Enable Jupyter Lab
 # c.KubeSpawner.environment = dict(JUPYTER_ENABLE_LAB='true')
 # c.JupyterHub.spawner_class = 'wrapspawner.ProfilesSpawner'
+import shlex
+
+from jupyterhub.spawner import LocalProcessSpawner
 
 class DemoFormSpawner(LocalProcessSpawner):
     def _options_form_default(self):
