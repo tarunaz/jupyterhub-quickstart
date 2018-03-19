@@ -61,4 +61,6 @@ mkdir -p /opt/app-root/data
 
 # Fixup permissions on directories and files.
 
+echo "86f73559-4414-4d71-ba7f-ca42a41000e7:x:1001:0:Default Application User:/opt/app-root/src:/sbin/nologin" >> /etc/passwd
+
 fix-permissions /opt/app-root
