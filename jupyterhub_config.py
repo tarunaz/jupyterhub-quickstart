@@ -102,6 +102,20 @@ class DemoFormSpawner(LocalProcessSpawner):
             argv.extend(self.user_options['argv'])
         return argv
     
+    def user_env(self, env):
+        """Augment environment of spawned process with user specific env variables."""
+        import pwd
+        env['USER'] = self.user.name
+        home = pwd.getpwnam(self.user.name).pw_dir
+        shell = pwd.getpwnam(self.user.name).pw_shell
+        # These will be empty if undefined,
+        # in which case don't set the env:
+        if home:
+            env['HOME'] = home
+        if shell:
+            env['SHELL'] = shell
+        return env
+    
     def get_env(self):
         env = super().get_env()
         if self.user_options.get('env'):
