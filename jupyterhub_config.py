@@ -65,28 +65,36 @@ c.KubeSpawner.pod_name_template = '%s-nb-{username}' % c.KubeSpawner.hub_connect
 
 # Enable Jupyter Lab
 # c.KubeSpawner.environment = dict(JUPYTER_ENABLE_LAB='true')
-c.JupyterHub.spawner_class = 'wrapspawner.ProfilesSpawner'
+# c.JupyterHub.spawner_class = 'wrapspawner.ProfilesSpawner'
 
-c.ProfilesSpawner.profiles = [
-    (
-        "Minimal Notebook (CentOS 7 / Python 3.5)",
-        's2i-minimal-notebook',
-        'kubespawner.KubeSpawner',
-        dict(singleuser_image_spec='s2i-minimal-notebook:3.5')
-    ),
-    (
-        "SciPy Notebook (CentOS 7 / Python 3.5)",
-        's2i-scipy-notebook',
-        'kubespawner.KubeSpawner',
-        dict(singleuser_image_spec='s2i-scipy-notebook:3.5')
-    ),
-    (
-        "Tensorflow Notebook (CentOS 7 / Python 3.5)",
-        's2i-tensorflow-notebook',
-        'kubespawner.KubeSpawner',
-        dict(singleuser_image_spec='s2i-tensorflow-notebook:3.5')
-    )
-]
+c.JupyterHub.spawner_class = DemoFormSpawner
+
+class DemoFormSpawner(LocalProcessSpawner):
+    def _options_form_default(self):
+        default_env = "YOURNAME=%s\n" % self.user.name
+        return """
+        <label for="env">Environment variables (one per line)</label>
+        <textarea name="env">{env}</textarea>
+        """.format(env=default_env)
+    
+    def options_from_form(self, formdata):
+        options = {}
+        options['env'] = env = {}
+        
+        env_lines = formdata.get('env', [''])
+        for line in env_lines[0].splitlines():
+            if line:
+                key, value = line.split('=', 1)
+                env[key.strip()] = value.strip()
+        
+        return options
+      
+    def get_env(self):
+        env = super().get_env()
+        if self.user_options.get('env'):
+            env.update(self.user_options['env'])
+        return env
+    
 c.JupyterHub.admin_access = True
 
 if os.environ.get('JUPYTERHUB_COOKIE_SECRET'):
