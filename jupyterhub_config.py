@@ -103,7 +103,7 @@ class DemoFormSpawner(LocalProcessSpawner):
         return argv
     
     def get_env(self):
-        env = super().get_env()
+        env = self.get_env() #super().get_env()
         if self.user_options.get('env'):
             env.update(self.user_options['env'])
         return env
