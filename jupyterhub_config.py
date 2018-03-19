@@ -42,26 +42,26 @@ c.JupyterHub.proxy_api_port = 8082
 c.Spawner.start_timeout = 120
 c.Spawner.http_timeout = 60
 
-c.KubeSpawner.port = 8080
+# c.KubeSpawner.port = 8080
 
-c.KubeSpawner.hub_connect_ip = service_name
-c.KubeSpawner.hub_connect_port = 8080
+# c.KubeSpawner.hub_connect_ip = service_name
+# c.KubeSpawner.hub_connect_port = 8080
 
-c.KubeSpawner.singleuser_extra_labels = { 'app': service_name }
+# c.KubeSpawner.singleuser_extra_labels = { 'app': service_name }
 
-c.KubeSpawner.singleuser_uid = os.getuid()
-c.KubeSpawner.singleuser_fs_gid = os.getuid()
+# c.KubeSpawner.singleuser_uid = os.getuid()
+# c.KubeSpawner.singleuser_fs_gid = os.getuid()
 
-c.KubeSpawner.singleuser_extra_annotations = {
-    "alpha.image.policy.openshift.io/resolve-names": "*"
-}
+# c.KubeSpawner.singleuser_extra_annotations = {
+#    "alpha.image.policy.openshift.io/resolve-names": "*"
+# }
 
-c.KubeSpawner.cmd = ['start-singleuser.sh']
+# c.KubeSpawner.cmd = ['start-singleuser.sh']
 
-c.KubeSpawner.args = ['--hub-api-url=http://%s:%d/hub/api' % (
-        c.KubeSpawner.hub_connect_ip, c.KubeSpawner.hub_connect_port)]
+# c.KubeSpawner.args = ['--hub-api-url=http://%s:%d/hub/api' % (
+      #  c.KubeSpawner.hub_connect_ip, c.KubeSpawner.hub_connect_port)]
 
-c.KubeSpawner.pod_name_template = '%s-nb-{username}' % c.KubeSpawner.hub_connect_ip
+# c.KubeSpawner.pod_name_template = '%s-nb-{username}' % c.KubeSpawner.hub_connect_ip
 
 # Enable Jupyter Lab
 # c.KubeSpawner.environment = dict(JUPYTER_ENABLE_LAB='true')
