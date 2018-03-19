@@ -53,15 +53,14 @@ ln -s /opt/app-root/bin/wait-for-database /opt/app-root/scripts/wait-for-databas
 
 echo "source /opt/app-root/etc/generate_container_user" >> /opt/app-root/etc/scl_enable
 
-# Create additional directories.
+# Add user to /opt/app-root/etc/passwd.
 
-echo " -----> Creating additional directories."
+echo "86f73559-4414-4d71-ba7f-ca42a41000e7:x:1000470000:0:Default Application User:/opt/app-root/src:/sbin" >> /opt/app-root/etc/passwd
+
+# Create additional directories.
 
 mkdir -p /opt/app-root/data
 
 # Fixup permissions on directories and files.
-
-echo " -----> Adding user to /opt/app-root/etc/passwd"
-printf "86f73559-4414-4d71-ba7f-ca42a41000e7:x:1000470000:0:Default Application User:/opt/app-root/src:/sbin" >> /opt/app-root/etc/passwd
 
 fix-permissions /opt/app-root
