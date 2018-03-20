@@ -72,11 +72,7 @@ import os
 from jupyterhub.spawner import LocalProcessSpawner
 
 class DemoFormSpawner(LocalProcessSpawner):
-    env['LD_LIBRARY_PATH'] = os.environ['LD_LIBRARY_PATH']
-    env['LD_PRELOAD'] = os.environ['LD_PRELOAD']
-    env['NSS_WRAPPER_PASSWD'] = os.environ['NSS_WRAPPER_PASSWD']
-    env['NSS_WRAPPER_GROUP'] = os.environ['NSS_WRAPPER_GROUP']
-    
+        
     def _options_form_default(self):
         default_env = "YOURNAME=%s\n" % self.user.name
         return """
@@ -126,6 +122,12 @@ class DemoFormSpawner(LocalProcessSpawner):
         env = super().get_env()
         if self.user_options.get('env'):
             env.update(self.user_options['env'])
+            
+        env['LD_LIBRARY_PATH'] = os.environ['LD_LIBRARY_PATH']
+        env['LD_PRELOAD'] = os.environ['LD_PRELOAD']
+        env['NSS_WRAPPER_PASSWD'] = os.environ['NSS_WRAPPER_PASSWD']
+        env['NSS_WRAPPER_GROUP'] = os.environ['NSS_WRAPPER_GROUP']
+    
         return env
 
 c.JupyterHub.spawner_class = DemoFormSpawner
