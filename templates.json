@@ -121,6 +121,11 @@
                     "required": true
                 },
                 {
+                    "name": "JUPYTER_ENABLE_LAB",
+                    "value": "true",
+                    "required": true
+                },
+                {
                     "name": "JUPYTERHUB_IMAGE",
                     "value": "jupyterhub:latest",
                     "required": true
@@ -319,6 +324,10 @@
                                             {
                                                 "name": "JUPYTERHUB_COOKIE_SECRET",
                                                 "value": "${COOKIE_SECRET}"
+                                            },
+                                            {
+                                                "name": "JUPYTER_ENABLE_LAB",
+                                                "value": "${JUPYTER_ENABLE_LAB}"
                                             }
                                         ],
                                         "volumeMounts": [
