@@ -80,7 +80,11 @@ else:
 
 c.JupyterHub.authenticator_class = 'tmpauthenticator.TmpAuthenticator'
 
-c.JupyterHub.spawner_class = 'kubespawner.KubeSpawner'
+# c.JupyterHub.spawner_class = 'kubespawner.KubeSpawner'
+
+c.JupyterHub.spawner_class = 'LocalProcessSpawner'
+
+c.KubeSpawner.environment = os.environ.get('JUPYTER_ENABLE_LAB', 'true')
 
 c.KubeSpawner.singleuser_image_spec = os.environ.get('JUPYTERHUB_NOTEBOOK_IMAGE',
         's2i-minimal-notebook:3.5')
