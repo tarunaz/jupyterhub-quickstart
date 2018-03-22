@@ -53,84 +53,15 @@ c.KubeSpawner.singleuser_uid = os.getuid()
 c.KubeSpawner.singleuser_fs_gid = os.getuid()
 
 c.KubeSpawner.singleuser_extra_annotations = {
-   "alpha.image.policy.openshift.io/resolve-names": "*"
+    "alpha.image.policy.openshift.io/resolve-names": "*"
 }
 
 c.KubeSpawner.cmd = ['start-singleuser.sh']
 
 c.KubeSpawner.args = ['--hub-api-url=http://%s:%d/hub/api' % (
-       c.KubeSpawner.hub_connect_ip, c.KubeSpawner.hub_connect_port)]
+        c.KubeSpawner.hub_connect_ip, c.KubeSpawner.hub_connect_port)]
 
 c.KubeSpawner.pod_name_template = '%s-nb-{username}' % c.KubeSpawner.hub_connect_ip
-
-# Enable Jupyter Lab
-# c.KubeSpawner.environment = dict(JUPYTER_ENABLE_LAB='true')
-# c.JupyterHub.spawner_class = 'wrapspawner.ProfilesSpawner'
-import shlex
-import os
-
-from jupyterhub.spawner import LocalProcessSpawner
-
-class DemoFormSpawner(LocalProcessSpawner):
-        
-    def _options_form_default(self):
-        default_env = "YOURNAME=%s\n" % self.user.name
-        return """
-        <label for="args">Extra notebook CLI arguments</label>
-        <input name="args" placeholder="e.g. --debug"></input>
-        <label for="env">Environment variables (one per line)</label>
-        <textarea name="env">{env}</textarea>
-        """.format(env=default_env)
-    
-    def options_from_form(self, formdata):
-        options = {}
-        options['env'] = env = {}
-        
-        env_lines = formdata.get('env', [''])
-        for line in env_lines[0].splitlines():
-            if line:
-                key, value = line.split('=', 1)
-                env[key.strip()] = value.strip()
-        
-        arg_s = formdata.get('args', [''])[0].strip()
-        if arg_s:
-            options['argv'] = shlex.split(arg_s)
-        return options
-    
-    def get_args(self):
-        """Return arguments to pass to the notebook server"""
-        argv = super().get_args()
-        if self.user_options.get('argv'):
-            argv.extend(self.user_options['argv'])
-        return argv
-    
-    def user_env(self, env):
-        """Augment environment of spawned process with user specific env variables."""
-        import pwd
-        env['USER'] = self.user.name
-        home = pwd.getpwnam(self.user.name).pw_dir
-        shell = pwd.getpwnam(self.user.name).pw_shell
-        # These will be empty if undefined,
-        # in which case don't set the env:
-        if home:
-            env['HOME'] = home
-        if shell:
-            env['SHELL'] = shell
-        return env
-    
-    def get_env(self):
-        env = super().get_env()
-        if self.user_options.get('env'):
-            env.update(self.user_options['env'])
-            
-        env['LD_LIBRARY_PATH'] = os.environ['LD_LIBRARY_PATH']
-        env['LD_PRELOAD'] = os.environ['LD_PRELOAD']
-        env['NSS_WRAPPER_PASSWD'] = os.environ['NSS_WRAPPER_PASSWD']
-        env['NSS_WRAPPER_GROUP'] = os.environ['NSS_WRAPPER_GROUP']
-    
-        return env
-
-c.JupyterHub.spawner_class = DemoFormSpawner
 
 c.JupyterHub.admin_access = True
 
@@ -149,16 +80,17 @@ else:
 
 c.JupyterHub.authenticator_class = 'tmpauthenticator.TmpAuthenticator'
 
-# we are providing a choice of images to deploy
-# c.JupyterHub.spawner_class = 'kubespawner.KubeSpawner'
-# c.KubeSpawner.singleuser_image_spec = os.environ.get('JUPYTERHUB_NOTEBOOK_IMAGE', 'minimal-notebook:3.5')
+c.JupyterHub.spawner_class = 'kubespawner.KubeSpawner'
+
+c.KubeSpawner.singleuser_image_spec = os.environ.get('JUPYTERHUB_NOTEBOOK_IMAGE',
+        's2i-minimal-notebook:3.5')
 
 if os.environ.get('JUPYTERHUB_NOTEBOOK_MEMORY'):
     c.Spawner.mem_limit = convert_size_to_bytes(os.environ['JUPYTERHUB_NOTEBOOK_MEMORY'])
 
 # Load configuration included in the image.
 
-image_config_file = '/opt/app-root/src/jupyterhub_config.py'
+image_config_file = '/opt/app-root/src/.jupyter/jupyterhub_config.py'
 
 if os.path.exists(image_config_file):
     with open(image_config_file) as fp:
