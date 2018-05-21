@@ -60,7 +60,9 @@ c.KubeSpawner.singleuser_extra_annotations = {
 
 #c.KubeSpawner.cmd = ['jupyterhub-singleuser']
 
-c.KubeSpawner.cmd = ['jupyter labhub']
+#c.KubeSpawner.cmd = ['jupyter labhub']
+
+c.KubeSpawner.cmd = ['jupyter-labhub']
 
 c.KubeSpawner.args = ['--hub-api-url=http://%s:%d/hub/api' % (
         c.KubeSpawner.hub_connect_ip, c.KubeSpawner.hub_connect_port)]
