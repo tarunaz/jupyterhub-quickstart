@@ -91,7 +91,7 @@ c.JupyterHub.authenticator_class = 'tmpauthenticator.TmpAuthenticator'
 c.JupyterHub.spawner_class = 'kubespawner.KubeSpawner'
 
 #c.KubeSpawner.environment = dict(JUPYTERLAB='true')
-c.KubeSpawner.environment = dict(JUPYTERLAB='true',PYSPARK_PYTHON='/opt/rh/rh-python36/root/usr/bin/python',PYTHONPATH=/opt/spark/python:$(echo /opt/spark/python/lib/py4j-*-src.zip))
+c.KubeSpawner.environment = dict(JUPYTERLAB='true',PYSPARK_PYTHON='/opt/rh/rh-python36/root/usr/bin/python',PYTHONPATH='/opt/spark/python/lib/py4j-0.10.6-src.zip')
 
 c.KubeSpawner.singleuser_image_spec = os.environ.get('JUPYTERHUB_NOTEBOOK_IMAGE',
         's2i-minimal-notebook:3.5')
