@@ -58,7 +58,9 @@ c.KubeSpawner.singleuser_extra_annotations = {
 
 #c.KubeSpawner.cmd = ['start-singleuser.sh']
 
-c.KubeSpawner.cmd = ['jupyterhub-singleuser']
+#c.KubeSpawner.cmd = ['jupyterhub-singleuser']
+
+c.KubeSpawner.cmd = ['jupyter labhub']
 
 c.KubeSpawner.args = ['--hub-api-url=http://%s:%d/hub/api' % (
         c.KubeSpawner.hub_connect_ip, c.KubeSpawner.hub_connect_port)]
@@ -84,7 +86,7 @@ c.JupyterHub.authenticator_class = 'tmpauthenticator.TmpAuthenticator'
 
 c.JupyterHub.spawner_class = 'kubespawner.KubeSpawner'
 
-c.KubeSpawner.environment = dict(JUPYTERLAB='true')
+#c.KubeSpawner.environment = dict(JUPYTERLAB='true') TEST THIS
 c.KubeSpawner.environment = dict(PYSPARK_PYTHON='/opt/rh/rh-python36/root/usr/bin/python')
 
 c.KubeSpawner.singleuser_image_spec = os.environ.get('JUPYTERHUB_NOTEBOOK_IMAGE',
