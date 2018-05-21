@@ -62,9 +62,9 @@ c.KubeSpawner.singleuser_extra_annotations = {
 
 #c.KubeSpawner.cmd = ['jupyter labhub']
 
-#c.KubeSpawner.cmd = ['jupyter-labhub']
+c.KubeSpawner.cmd = ['jupyter-labhub']
 
-c.KubeSpawner.cmd = ['start.sh']
+#c.KubeSpawner.cmd = ['start.sh']
 
 c.KubeSpawner.args = ['--hub-api-url=http://%s:%d/hub/api' % (
         c.KubeSpawner.hub_connect_ip, c.KubeSpawner.hub_connect_port)]
@@ -91,7 +91,7 @@ c.JupyterHub.authenticator_class = 'tmpauthenticator.TmpAuthenticator'
 c.JupyterHub.spawner_class = 'kubespawner.KubeSpawner'
 
 #c.KubeSpawner.environment = dict(JUPYTERLAB='true')
-c.KubeSpawner.environment = dict(JUPYTERLAB='true',PYSPARK_PYTHON='/opt/rh/rh-python36/root/usr/bin/python')
+c.KubeSpawner.environment = dict(JUPYTERLAB='true',PYSPARK_PYTHON='/opt/rh/rh-python36/root/usr/bin/python',PYTHONPATH=/opt/spark/python:$(echo /opt/spark/python/lib/py4j-*-src.zip))
 
 c.KubeSpawner.singleuser_image_spec = os.environ.get('JUPYTERHUB_NOTEBOOK_IMAGE',
         's2i-minimal-notebook:3.5')
